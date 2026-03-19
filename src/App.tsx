@@ -1,10 +1,9 @@
 import React from 'react';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Visual Teste React</h1>
-    </div>
+    <AppRoutes />
   );
 }
 
