@@ -21,7 +21,7 @@ export function Header() {
             className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-4 py-2 rounded-md text-sm transition-colors whitespace-nowrap"
           >
             <Plus size={16} />
-            <span className="hidden sm:inline">Novo usuario</span>
+            <span className="hidden sm:inline">Novo usuário</span>
           </button>
         )}
       </div>

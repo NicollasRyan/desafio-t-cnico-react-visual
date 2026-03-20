@@ -5,10 +5,13 @@ import {
   getUsers,
   updateUser,
 } from "../services/userService";
+import { AppError } from "../errors/AppError";
 
 type UsersContextType = {
   users: User[];
   loading: boolean;
+  error: string | null;
+  refetchUsers: () => Promise<void>;
   addUser: (user: Omit<User, "id">) => Promise<void>;
   editUser: (id: string | number, user: Partial<User>) => Promise<void>;
   deleteUserById: (id: string | number) => Promise<void>;
@@ -19,11 +22,20 @@ const UsersContext = createContext({} as UsersContextType);
 export function UsersProvider({ children }: any) {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   async function fetchUsers() {
+    setLoading(true);
+    setError(null);
     try {
       const data = await getUsers();
       setUsers(data);
+    } catch (err) {
+      if (err instanceof AppError) {
+        setError(err.message);
+      } else {
+        setError("Não foi possível carregar usuários.");
+      }
     } finally {
       setLoading(false);
     }
@@ -93,6 +105,8 @@ export function UsersProvider({ children }: any) {
       value={{
         users,
         loading,
+        error,
+        refetchUsers: fetchUsers,
         addUser,
         editUser,
         deleteUserById,

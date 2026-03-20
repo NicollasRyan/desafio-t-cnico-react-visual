@@ -34,10 +34,10 @@ export function CardUser({
   };
 
   return (
-    <div className="border-b border-gray-300 p-4">
+    <article className="border-b border-gray-300 p-4">
       <div className="grid grid-cols-1 gap-3 md:grid-cols-5 md:items-center">
         <div className="flex gap-2 items-center min-w-0">
-        <CircleUser size={24} />
+          <CircleUser size={24} />
           <p className="text-sm truncate">{name}</p>
         </div>
         <p className="text-sm break-all">{email}</p>
@@ -60,6 +60,6 @@ export function CardUser({
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

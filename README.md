@@ -1,46 +1,60 @@
-# Getting Started with Create React App
+# Desafio React - Cadastro de Usuários
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicação front-end para listagem, cadastro, edição e exclusão de usuários, desenvolvida com React e TypeScript.
 
-## Available Scripts
+O projeto consome uma API REST para carregar os usuários iniciais e mantém as interações de criação/edição/exclusão com feedback visual para o usuário.
 
-In the project directory, you can run:
+## Stack utilizada
 
-### `npm start`
+- React
+- TypeScript
+- React Router
+- Context API
+- Axios
+- React Hook Form
+- React Toastify
+- Tailwind CSS
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Como rodar o projeto
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Pré-requisitos
 
-### `npm test`
+- Node.js instalado
+- Yarn instalado
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Passos
 
-### `npm run build`
+```bash
+yarn install
+yarn start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+A aplicação ficará disponível em:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+[http://localhost:3000](http://localhost:3000)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Decisões técnicas
 
-### `npm run eject`
+- **Context API**
+  - Usada para centralizar o estado global de usuários, loading e erro.
+  - Evita prop drilling entre páginas e componentes.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **Axios com interceptor**
+  - Configuração centralizada em `src/services/api.ts`.
+  - Interceptor de resposta padroniza tratamento de erros com `AppError`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Validação com React Hook Form**
+  - Validação declarativa dos campos no formulário de usuário.
+  - Regras como obrigatório, tamanho mínimo e formato de e-mail.
+  - Mensagens de erro exibidas diretamente abaixo dos campos.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Funcionalidades implementadas
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Listagem de usuários com busca por nome
+- Cadastro de usuário
+- Edição de usuário
+- Exclusão de usuário
+- Estado de carregamento
+- Estado visual de erro com ação de tentar novamente
+- Estado vazio quando não há resultados
+- Layout responsivo para mobile e desktop

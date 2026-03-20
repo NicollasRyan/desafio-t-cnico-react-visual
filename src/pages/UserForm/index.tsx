@@ -95,10 +95,10 @@ export function UserForm() {
             type="text"
             placeholder="Digite o nome"
             {...register("name", {
-              required: "Nome e obrigatorio",
+              required: "Nome é obrigatório",
               minLength: {
                 value: 3,
-                message: "Nome deve ter no minimo 3 caracteres",
+                message: "Nome deve ter no mínimo 3 caracteres",
               },
             })}
             className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -114,10 +114,10 @@ export function UserForm() {
             type="email"
             placeholder="Digite o email"
             {...register("email", {
-              required: "Email e obrigatorio",
+              required: "E-mail é obrigatório",
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: "Digite um email valido",
+                message: "Digite um e-mail válido",
               },
             })}
             className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -133,10 +133,10 @@ export function UserForm() {
             type="tel"
             placeholder="Digite o telefone"
             {...register("phone", {
-              required: "Telefone e obrigatorio",
+              required: "Telefone é obrigatório",
               minLength: {
                 value: 10,
-                message: "Telefone deve ter no minimo 10 digitos",
+                message: "Telefone deve ter no mínimo 10 dígitos",
               },
             })}
             className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -152,10 +152,10 @@ export function UserForm() {
             type="text"
             placeholder="Digite a cidade"
             {...register("city", {
-              required: "Cidade e obrigatoria",
+              required: "Cidade é obrigatória",
               minLength: {
                 value: 2,
-                message: "Cidade deve ter no minimo 2 caracteres",
+                message: "Cidade deve ter no mínimo 2 caracteres",
               },
             })}
             className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
