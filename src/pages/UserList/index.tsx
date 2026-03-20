@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { CardUser } from "../components/CardUser";
-import { Container } from "../components/Container";
-import { Loading } from "../components/Loading";
-import { useUsersContext } from "../context/UsersContext";
+import { CardUser } from "./components/CardUser";
+import { Container } from "../../components/Container";
+import { Loading } from "../../components/Loading";
+import { useUsersContext } from "../../context/UsersContext";
 
 export function UserList() {
   const { users, loading } = useUsersContext();

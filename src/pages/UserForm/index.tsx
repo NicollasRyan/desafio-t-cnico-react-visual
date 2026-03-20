@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { Container } from "../components/Container";
+import { Container } from "../../components/Container";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { useUsersContext } from "../context/UsersContext";
+import { useUsersContext } from "../../context/UsersContext";
 import { useEffect } from "react";
-import { AppError } from "../errors/AppError";
+import { AppError } from "../../errors/AppError";
 
 export function UserForm() {
   const { addUser, editUser, users } = useUsersContext();
