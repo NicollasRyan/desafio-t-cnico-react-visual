@@ -7,8 +7,8 @@ export default function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<UserList />} />
-        <Route path="/users/new" element={<UserForm />} />
-        <Route path="/users/:id" element={<UserForm />} />
+        <Route path="/create" element={<UserForm />} />
+        <Route path="/edit/:id" element={<UserForm />} />
       </Routes>
     </BrowserRouter>
   );
