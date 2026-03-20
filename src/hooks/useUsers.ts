@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../services/api";
 import { User } from "../types/user";
+import { toast } from "react-toastify";
 
 export function useUsers() {
   const [users, setUsers] = useState<User[]>([]);
@@ -10,8 +11,8 @@ export function useUsers() {
     try {
       const { data } = await api.get("/users");
       setUsers(data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
+    } catch {
+      toast.error("Erro ao carregar usuarios");
     } finally {
       setLoading(false);
     }

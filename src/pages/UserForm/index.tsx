@@ -3,14 +3,28 @@ import { Container } from "../../components/Container";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useUsersContext } from "../../context/UsersContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AppError } from "../../errors/AppError";
+import { toast } from "react-toastify";
+
+type FormData = {
+  name: string;
+  email: string;
+  phone: string;
+  city: string;
+};
 
 export function UserForm() {
   const { addUser, editUser, users } = useUsersContext();
-  const { handleSubmit, register, setValue } = useForm();
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>();
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const push = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id && users?.length) {
@@ -24,37 +38,36 @@ export function UserForm() {
     }
   }, [id, setValue, users]);
 
-  const onSubmit = async (data: any) => {
+  function formatUserData(data: FormData) {
+    return {
+      ...data,
+      address: {
+        city: data.city,
+      },
+    };
+  }
+
+  const onSubmit = async (data: FormData) => {
     try {
+      setLoading(true);
+      const formattedData = formatUserData(data);
       if (id) {
-        const formattedData = {
-          ...data,
-          address: {
-            city: data.city,
-          },
-        };
-
         await editUser(id, formattedData);
+        toast.success("Usuário Atualizado com sucesso!");
       } else {
-        const formattedData = {
-          ...data,
-          id: crypto.randomUUID(),
-          isLocal: true,
-          address: {
-            city: data.city,
-          },
-        };
-
         await addUser(formattedData);
+        toast.success("Usuário Criado com sucesso!");
       }
 
-      push("/");
+      navigate("/");
     } catch (error) {
       if (error instanceof AppError) {
-        alert(error.message);
+        toast.error(error.message);
       } else {
-        alert("Erro inesperado");
+        toast.error("Erro inesperado");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,7 +75,7 @@ export function UserForm() {
     <Container>
       <div className="flex items-center gap-4">
         <button
-          onClick={() => push("/")}
+          onClick={() => navigate("/")}
           className="text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <ArrowLeft />
@@ -74,16 +87,25 @@ export function UserForm() {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-2 gap-4 bg-white border border-gray-200 p-6 mt-4 rounded-lg shadow-sm"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white border border-gray-200 p-4 md:p-6 mt-4 rounded-lg shadow-sm"
       >
         <div className="flex flex-col gap-1">
           <label className="text-sm text-gray-600 font-bold">Nome</label>
           <input
             type="text"
             placeholder="Digite o nome"
-            {...register("name", { required: true })}
+            {...register("name", {
+              required: "Nome e obrigatorio",
+              minLength: {
+                value: 3,
+                message: "Nome deve ter no minimo 3 caracteres",
+              },
+            })}
             className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
+          {errors.name && (
+            <span className="text-xs text-red-500">{errors.name.message}</span>
+          )}
         </div>
 
         <div className="flex flex-col gap-1">
@@ -91,9 +113,18 @@ export function UserForm() {
           <input
             type="email"
             placeholder="Digite o email"
-            {...register("email", { required: true })}
+            {...register("email", {
+              required: "Email e obrigatorio",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Digite um email valido",
+              },
+            })}
             className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
+          {errors.email && (
+            <span className="text-xs text-red-500">{errors.email.message}</span>
+          )}
         </div>
 
         <div className="flex flex-col gap-1">
@@ -101,9 +132,18 @@ export function UserForm() {
           <input
             type="tel"
             placeholder="Digite o telefone"
-            {...register("phone")}
+            {...register("phone", {
+              required: "Telefone e obrigatorio",
+              minLength: {
+                value: 10,
+                message: "Telefone deve ter no minimo 10 digitos",
+              },
+            })}
             className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
+          {errors.phone && (
+            <span className="text-xs text-red-500">{errors.phone.message}</span>
+          )}
         </div>
 
         <div className="flex flex-col gap-1">
@@ -111,24 +151,34 @@ export function UserForm() {
           <input
             type="text"
             placeholder="Digite a cidade"
-            {...register("city", { required: true })}
+            {...register("city", {
+              required: "Cidade e obrigatoria",
+              minLength: {
+                value: 2,
+                message: "Cidade deve ter no minimo 2 caracteres",
+              },
+            })}
             className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
+          {errors.city && (
+            <span className="text-xs text-red-500">{errors.city.message}</span>
+          )}
         </div>
 
-        <div className="col-span-2 flex justify-end mt-2 gap-2">
+        <div className="md:col-span-2 flex flex-col-reverse sm:flex-row justify-end mt-2 gap-2">
           <button
             type="button"
-            onClick={() => push("/")}
-            className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
+            onClick={() => navigate("/")}
+            className="w-full sm:w-auto bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400"
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400"
+            disabled={loading}
+            className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Salvar
+            {loading ? "Salvando..." : "Salvar"}
           </button>
         </div>
       </form>

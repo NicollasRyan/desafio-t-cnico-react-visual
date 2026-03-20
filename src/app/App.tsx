@@ -1,12 +1,16 @@
-import React from 'react';
-import AppRoutes from './routes';
-import { UsersProvider } from "../context/UsersContext";
+import React from "react";
+import AppRoutes from "./routes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Header } from "../components/Header";
 
 function App() {
   return (
-    <UsersProvider>
+    <>
+      <ToastContainer position="top-right" autoClose={3000} />
+      <Header />
       <AppRoutes />
-    </UsersProvider>
+    </>
   );
 }
 
