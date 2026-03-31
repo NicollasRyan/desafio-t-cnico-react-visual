@@ -6,6 +6,7 @@ import { useUsersContext } from "../../context/UsersContext";
 import { useEffect, useState } from "react";
 import { AppError } from "../../errors/AppError";
 import { toast } from "react-toastify";
+import { FormField } from "./components/FormField";
 
 type FormData = {
   name: string;
@@ -89,81 +90,67 @@ export function UserForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white border border-gray-200 p-4 md:p-6 mt-4 rounded-lg shadow-sm"
       >
-        <div className="flex flex-col gap-1">
-          <label className="text-sm text-gray-600 font-bold">Nome</label>
-          <input
-            type="text"
+          <FormField<FormData>
+            label="Nome"
+            name="name"
             placeholder="Digite o nome"
-            {...register("name", {
+            register={register}
+            error={errors.name}
+            rules={{
               required: "Nome é obrigatório",
               minLength: {
                 value: 3,
                 message: "Nome deve ter no mínimo 3 caracteres",
               },
-            })}
-            className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            }}
           />
-          {errors.name && (
-            <span className="text-xs text-red-500">{errors.name.message}</span>
-          )}
-        </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm text-gray-600 font-bold">Email</label>
-          <input
+          <FormField<FormData>
+            label="Email"
+            name="email"
             type="email"
             placeholder="Digite o email"
-            {...register("email", {
+            register={register}
+            error={errors.email}
+            rules={{
               required: "E-mail é obrigatório",
               pattern: {
                 value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                 message: "Digite um e-mail válido",
               },
-            })}
-            className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            }}
           />
-          {errors.email && (
-            <span className="text-xs text-red-500">{errors.email.message}</span>
-          )}
-        </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm text-gray-600 font-bold">Telefone</label>
-          <input
+          <FormField<FormData>
+            label="Telefone"
+            name="phone"
             type="tel"
             placeholder="Digite o telefone"
-            {...register("phone", {
+            register={register}
+            error={errors.phone}
+            rules={{
               required: "Telefone é obrigatório",
               minLength: {
                 value: 10,
                 message: "Telefone deve ter no mínimo 10 dígitos",
               },
-            })}
-            className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            }}
           />
-          {errors.phone && (
-            <span className="text-xs text-red-500">{errors.phone.message}</span>
-          )}
-        </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm text-gray-600 font-bold">Cidade</label>
-          <input
-            type="text"
+          <FormField<FormData>
+            label="Cidade"
+            name="city"
             placeholder="Digite a cidade"
-            {...register("city", {
+            register={register}
+            error={errors.city}
+            rules={{
               required: "Cidade é obrigatória",
               minLength: {
                 value: 2,
                 message: "Cidade deve ter no mínimo 2 caracteres",
               },
-            })}
-            className="border border-gray-300 rounded-md px-3 py-2 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            }}
           />
-          {errors.city && (
-            <span className="text-xs text-red-500">{errors.city.message}</span>
-          )}
-        </div>
 
         <div className="md:col-span-2 flex flex-col-reverse sm:flex-row justify-end mt-2 gap-2">
           <button

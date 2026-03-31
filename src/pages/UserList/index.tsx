@@ -62,7 +62,7 @@ export function UserList() {
       )}
       {!error && filteredUsers.length > 0 && (
         <div>
-          {filteredUsers.map((user) => (
+          {[...filteredUsers].reverse().map((user) => (
             <CardUser
               key={user.id}
               id={user.id}
